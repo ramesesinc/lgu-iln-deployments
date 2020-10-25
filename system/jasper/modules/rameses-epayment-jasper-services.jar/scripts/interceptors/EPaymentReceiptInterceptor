@@ -1,0 +1,51 @@
+import com.rameses.annotations.*
+import com.rameses.util.*
+import com.rameses.common.*
+import treasury.utils.*;
+
+class EPaymentReceiptInterceptor {
+
+    @Service(value="EPaymentService", connection="epayment")
+    def epmtSvc;
+
+    @Service("NumberService")
+    def numSvc;
+
+    def getEOR( def o ) {
+        def rct = epmtSvc.getReceipt([ objid: o.objid ]);
+        if ( !rct ) throw new Exception("'"+ o.objid +"' EOR record not found"); 
+
+        rct.qrcode = "qrcode:" + rct.receiptno;
+        rct.amountinwords = numSvc.doubleToWords( rct.amount );
+        return rct;
+    }
+
+    @Before(pattern="JasperReportService.generateReport", eval="#{ args[0].reportid == 'eor' }", index=-10000)
+    public void getReport(def evt) {
+        def o = evt.args[0];
+        def refid = o.refid;
+        if ( !o.data ) { 
+            o.data = getEOR([ objid: refid ]);
+        }
+        o.template = "eor51";
+        o.modulename = "epayment";
+    }   
+
+    @Before(pattern="JasperReportEmailService.send", eval="#{ args[0].reportid == 'eor' }", index=-10000)
+    public void emailEOR(def evt) {
+        def o = evt.args[0];
+        def refid = o.refid;
+        def data = getEOR( [objid: refid] );
+
+        o.attachments = [
+            [ title: "EOR " + data.receiptno + ".pdf", refid:refid, reportid: "eor", data: data ]
+        ];
+        o.data = data;
+        o.txntype = data.paymentorder?.txntype;
+        o.to = o.email;
+        o.subject = "EOR No. " + data.receiptno;
+        o.message = "Dear valued customer <br>Please see attached Electronic OR";
+        o.connection = "primary-email-server";
+    }   
+
+}

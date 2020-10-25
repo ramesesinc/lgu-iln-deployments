@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="eor56"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="561"
+		 columnSpacing="0"
+		 leftMargin="17"
+		 rightMargin="17"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+
+	<field name="receiptno" class="java.lang.String"/>
+	<field name="paidby" class="java.lang.String"/>
+	<field name="paidbyaddress" class="java.lang.String"/>
+	<field name="remarks" class="java.lang.String"/>
+	<field name="amount" class="java.lang.Number"/>
+	<field name="amountinwords" class="java.lang.String"/>
+	<field name="partner.name" class="java.lang.String"/>
+	<field name="traceid" class="java.lang.String"/>
+	<field name="tracedate" class="java.lang.String"/>
+	<field name="datafield" class="java.lang.Boolean"/>
+	<field name="agency.group.title" class="java.lang.String"/>
+	<field name="item.remarks" class="java.lang.String"/>
+	<field name="_items" class="java.lang.Object"/>
+	<field name="qrcode" class="java.lang.Object"/>
+	<field name="AGENCY.name" class="java.lang.String"/>
+	<field name="AGENCY.office" class="java.lang.String"/>
+	<field name="item.owner.name" class="java.lang.String"/>
+	<field name="item.barangay" class="java.lang.String"/>
+	<field name="item.cadastrallotno" class="java.lang.String"/>
+	<field name="item.tdno" class="java.lang.Number"/>
+	<field name="item.totalav" class="java.lang.Integer"/>
+	<field name="item.period" class="java.lang.Integer"/>
+	<field name="item.basic" class="java.lang.Integer"/>
+	<field name="item.basicdp" class="java.lang.Integer"/>
+	<field name="item.sef" class="java.lang.Integer"/>
+	<field name="item.sefdp" class="java.lang.Integer"/>
+	<field name="item.amount" class="java.lang.Integer"/>
+	<field name="item.owner.name_1" class="java.lang.String"/>
+	<field name="item.barangay_1" class="java.lang.String"/>
+	<field name="item.cadastrallotno_1" class="java.lang.String"/>
+	<field name="item.tdno_1" class="java.lang.Number"/>
+	<field name="item.totalav_1" class="java.lang.Integer"/>
+	<field name="item.period_1" class="java.lang.Integer"/>
+	<field name="item.basic_1" class="java.lang.Integer"/>
+	<field name="item.basicdp_1" class="java.lang.Integer"/>
+	<field name="item.sef_1" class="java.lang.Integer"/>
+	<field name="item.sefdp_1" class="java.lang.Integer"/>
+	<field name="item.amount_1" class="java.lang.Integer"/>
+	<field name="_items.provcity" class="java.lang.String"/>
+	<field name="lguname" class="java.lang.String"/>
+	<field name="receiptdate" class="java.util.Date"/>
+	<field name="reportparams.PARENTLGUFORMALNAME" class="java.lang.String"/>
+	<field name="reportparams.LGUFORMALNAME" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="219"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="16"
+						y="93"
+						width="186"
+						height="18"
+						key="staticText-2"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[MUNICIPALITY / PROVINCE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="208"
+						y="93"
+						width="87"
+						height="18"
+						key="staticText-3"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[	CITY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="400"
+						y="93"
+						width="100"
+						height="18"
+						key="staticText-4"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[	DATE]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="136"
+						width="561"
+						height="0"
+						key="line-2"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="210"
+						width="561"
+						height="0"
+						key="line-3"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="208"
+						y="111"
+						width="187"
+						height="18"
+						key="textField-3"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lguname}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="400"
+						y="111"
+						width="100"
+						height="18"
+						key="textField-4"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[$F{receiptdate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="287"
+						y="38"
+						width="161"
+						height="38"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica" size="18" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{receiptno}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="287"
+						y="15"
+						width="108"
+						height="14"
+						key="staticText-34"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[EOR No.]]></text>
+				</staticText>
+				<image  onErrorType="Blank" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="456"
+						y="3"
+						width="96"
+						height="78"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.io.InputStream"><![CDATA[$F{qrcode}]]></imageExpression>
+				</image>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="92"
+						y="32"
+						width="178"
+						height="16"
+						key="textField-9"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{lguname}]]></textFieldExpression>
+				</textField>
+				<image  evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="8"
+						y="7"
+						width="80"
+						height="73"
+						key="image-2"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA["images/lgulogo.png"]]></imageExpression>
+				</image>
+				<line direction="TopDown">
+					<reportElement
+						x="280"
+						y="2"
+						width="0"
+						height="83"
+						key="line-13"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="92"
+						y="16"
+						width="178"
+						height="16"
+						key="staticText-35"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Republic of the Philippines]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="86"
+						width="561"
+						height="0"
+						key="line-14"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="25"
+						y="148"
+						width="510"
+						height="50"
+						key="textField-10"/>
+					<box></box>
+					<textElement isStyledText="true">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Received from  <style isBold=\"true\" isUnderlined=\"true\">" + $F{paidby} + "</style> the sum of <style isBold=\"true\">" + $F{amountinwords} + "</style> pesos <style isBold=\"true\"> (Php " + $F{amount} + ") </style> Philippine Currency, in full or installment payment of REAL PROPERTY TAX for the property described in the Assessment Rolls as follows:"]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="44"  isSplitAllowed="true" >
+				<subreport  isUsingCache="true">
+					<reportElement
+						x="0"
+						y="0"
+						width="561"
+						height="40"
+						key="subreport-1"/>
+					<dataSourceExpression><![CDATA[$F{_items}]]></dataSourceExpression>
+					<subreportExpression  class="java.lang.String"><![CDATA["eor56_item.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="123"  isSplitAllowed="true" >
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="12"
+						width="561"
+						height="0"
+						key="line-6"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="51"
+						width="561"
+						height="0"
+						key="line-7"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="11"
+						y="23"
+						width="274"
+						height="13"
+						key="staticText-23"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Total taxes paid by Money Order, Treasury Warrant or Check No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="58"
+						width="339"
+						height="12"
+						key="staticText-24"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[* Payment without penalty may be made within the periods stated below if by install:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="12"
+						y="70"
+						width="339"
+						height="12"
+						key="staticText-25"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[1st Installment - January 1 to March 31, of the year]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="12"
+						y="81"
+						width="339"
+						height="12"
+						key="staticText-26"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[2nd Installment - April 1 to June 30, of the year]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="93"
+						width="339"
+						height="12"
+						key="staticText-27"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[3rd Installment - July 1 to Sept. 30, of the year]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="11"
+						y="106"
+						width="339"
+						height="12"
+						key="staticText-28"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[4th Installment - October 1 to Dec. 31, of the year]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="255"
+						y="32"
+						width="65"
+						height="0"
+						key="line-10"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="327"
+						y="23"
+						width="38"
+						height="13"
+						key="staticText-31"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[Date]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="365"
+						y="32"
+						width="65"
+						height="0"
+						key="line-11"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="430"
+						y="21"
+						width="38"
+						height="13"
+						key="staticText-32"/>
+					<box></box>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+				<text><![CDATA[, 20]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="456"
+						y="32"
+						width="40"
+						height="0"
+						key="line-12"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</summary>
+</jasperReport>

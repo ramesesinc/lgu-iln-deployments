@@ -1,0 +1,21 @@
+import com.rameses.annotations.*;
+
+class OnlineLandTaxClearanceReportInterceptor {
+
+	@Service(value="LandTaxReportTaxClearanceService", connection="rpt")
+	def svc;
+	
+	@Before( pattern="JasperReportService.generateReport", eval="#{args[0].reportid == 'rpttaxclearance' }" )
+	public def beforeReport(def evt) {
+		def req = evt.args[0];
+		req.modulename = "landtax";
+		req.template = "rpttaxclearance/taxclearance";
+		req.data = svc.getOnlineIssuedClearance(req);
+	}
+
+	@Before( pattern="JasperReportEmailService.send", eval="#{args[0].reportid == 'eor' && args[0].txntype == 'rpttaxclearance' }" )
+	public def beforeEmail(def evt) {
+		def arg = evt.args[0];
+		arg.attachments << [reportid: "rpttaxclearance", title: "RealtyTaxClearance.pdf", eorid: arg.refid]
+	}
+}

@@ -1,0 +1,16 @@
+import com.rameses.annotations.*;
+
+class OnlineLandTaxBillingReportInterceptor {
+
+	@Service(value="RPTReceiptService", connection="rpt")
+	def svc; 
+
+	@Before( pattern="JasperReportService.generateReport", eval="#{args[0].reportid == 'eor' && args[0].data.txntype == 'rptcol' }" )
+	public def beforeReport(def evt) {
+		def req = evt.args[0];
+		req.template = "eor56";
+		def receipt = svc.formatReceiptForPrinting([objid: req.refid]);
+		req.data.lguname = receipt.lguname;
+		req.data._items = receipt._items;
+	}
+}
