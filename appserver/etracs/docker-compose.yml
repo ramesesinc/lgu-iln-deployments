@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  etracs-server:
+    container_name: etracs-server
+    image: ramesesinc/etracs-server-province:255.03.001
+    restart: always
+    logging:
+      driver: "json-file"
+      options: 
+        max-file: "5"
+        max-size: 10m
+    environment:
+      TZ: "Asia/Manila"
+    env_file:
+      - ./env.conf
+      - ../../_res/env.conf
+      - ../../_custom/env.conf
+    ports:
+      - "8070:8070"
+    volumes:
+      - ./modules:/apps/etracs25/modules
+
+      - ../../_custom/datasources:/services/datasources
+      - ./datasources:/services/datasources/ext
+
+      - ../../_res/connections:/apps/etracs25/connections/ext      
+      - ../../_custom/module-server:/apps/etracs25/modules/ext/zzz-lgu-custom-module
+
+      - ./dev_modules/gov:/gov
+      - ./dev_modules/gov/module.conf:/apps/etracs25/modules.conf.d/_gov.conf
+
+      - ./dev_modules/treasury:/treasury
+      - ./dev_modules/treasury/module.conf:/apps/etracs25/modules.conf.d/_treasury.conf
+
+      - ./dev_modules/rptis:/rptis
+      - ./dev_modules/rptis/module.conf:/apps/etracs25/modules.conf.d/rptis.conf
