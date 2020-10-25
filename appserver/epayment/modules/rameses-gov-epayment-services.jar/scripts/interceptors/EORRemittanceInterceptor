@@ -1,0 +1,22 @@
+import com.rameses.annotations.*
+
+class EORRemittanceInterceptor {
+
+    @DataContext('eor_remittance')
+    def eor_rem; 
+
+    @DataContext('eor_remittance_fund')
+    def eor_rem_fund; 
+
+    @Before(pattern="PersistenceService.removeEntity", eval="#{ args[0]._schemaname == 'eor_remittance' }")
+    public void beforeRemoveEntity( evt ) { 
+        def param = evt.args[0];
+        def rem = eor_rem.find([ objid: param.objid ]).select('objid,state').first(); 
+        if ( !rem ) throw new Exception('EOR Remittance record not found'); 
+
+        if ( !rem.state.toString().equalsIgnoreCase('DRAFT') ) 
+            throw new Exception('EOR Remittance record no longer in DRAFT mode'); 
+
+        eor_rem_fund.find([ remittanceid: param.objid ]).delete(); 
+    } 
+}

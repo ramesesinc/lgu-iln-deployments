@@ -1,0 +1,33 @@
+import com.rameses.annotations.*;
+
+
+class EOREmailerTask {
+	
+	@DataContext("eor_for_email")
+	def eorMail;
+
+	@Service("DateService")
+	def dateSvc;
+	
+	@Service(value="JasperReportEmailService", connection="jasper")
+	def jasperService;
+
+	@Schedule(interval=10)
+	public void sendEmail( task ) {
+		def list = eorMail.where("state = 0").orderBy( "txndate" ).list();
+		if( list ) {
+			println "sending batch epayment email";
+			list.each {
+				try {
+					jasperService.send( [reportid: "eor", refid: it.objid, email: it.email ] );
+					//eorMail.find( [objid: it.objid]).update( [state: 1 ]);
+					eorMail.find( [objid: it.objid ]).delete();
+				}
+				catch(e) {
+					eorMail.find( [objid: it.objid]).update( [state:2, errmsg: e.message ] );
+				}
+			}
+		}
+	}
+
+}

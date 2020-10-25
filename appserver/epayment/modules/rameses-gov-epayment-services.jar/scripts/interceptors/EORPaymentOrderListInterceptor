@@ -1,0 +1,48 @@
+import com.rameses.annotations.*;
+
+class EORPaymentOrderListInterceptor { 
+	
+	@After(pattern="QueryService.getNodeList", eval="#{ args[0]._schemaname == 'eor_paymentorder' }")
+	public void afterGetNodeList( evt ) { 
+		def result = evt.result; 
+		result << [ id:'open', title: 'Open', _schemaname: 'eor_paymentorder' ];
+		result << [ id:'closed', title: 'Posted', _schemaname: 'eor_paymentorder_paid'];
+		result << [ id:'cancelled', title: 'Cancelled', _schemaname: 'eor_paymentorder_cancelled'];
+	}
+
+	@Before(pattern="QueryService.getList", eval="#{ args[0]._schemaname == 'eor_paymentorder' }")
+	public void beforeGetOpenList( evt ) {
+		def param = evt.args[0];
+		if ( !param.node?.id ) return;
+
+		def orderbys = ['txndate'];
+		if ( param.orderBy ) orderbys << param.orderBy; 
+
+		param.orderBy = orderbys.join(', '); 
+		orderbys.clear(); 
+	} 
+
+	@Before(pattern="QueryService.getList", eval="#{ args[0]._schemaname == 'eor_paymentorder_paid' }")
+	public void beforeGetPaidList( evt ) {
+		def param = evt.args[0];
+		if ( !param.node?.id ) return;
+
+		def orderbys = ['txndate desc'];
+		if ( param.orderBy ) orderbys << param.orderBy; 
+
+		param.orderBy = orderbys.join(', '); 
+		orderbys.clear(); 
+	} 	
+
+	@Before(pattern="QueryService.getList", eval="#{ args[0]._schemaname == 'eor_paymentorder_cancelled' }")
+	public void beforeGetCancelledList( evt ) {
+		def param = evt.args[0];
+		if ( !param.node?.id ) return;
+
+		def orderbys = ['txndate desc'];
+		if ( param.orderBy ) orderbys << param.orderBy; 
+
+		param.orderBy = orderbys.join(', '); 
+		orderbys.clear(); 		
+	} 	
+}

@@ -1,0 +1,11 @@
+<schema>
+	<element tablename="eor_for_email">
+		<field name="objid" primary="true" />
+		<field name="txndate" type="timestamp"/>
+		<field name="email" />
+		<field name="mobileno" />
+		<field name="state" type="integer"/>
+		<field name="dtsent" type="timestamp"/>
+		<field name="errmsg" />
+	</element>
+</schema>

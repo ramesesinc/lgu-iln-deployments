@@ -1,0 +1,75 @@
+import com.rameses.annotations.*;
+import java.rmi.server.UID;
+import com.rameses.util.*;
+
+class EPaymentPluginInterceptor {
+	
+	@Service(dynamic=true)
+	def svc;
+
+	@DataContext("epayment_plugin")
+	def pluginEm;
+
+	@Before(pattern="EORService.post", eval="#{args[0].txntype!=null}", index=10000 )
+	public void beforePostPayment(def evt) {
+		def a = evt.args[0];
+		def handler = a.txntype;
+		def p = pluginEm.find( [objid: handler] ).first();
+		if( p?.servicename ) {
+			def conn = p.connection;
+			def serviceName = p.servicename;
+			if(!conn) {
+				conn = p.objid;
+			}
+			def t = svc.lookup(serviceName, conn );
+			if(!t) throw new Exception(serviceName + " not found for "+handler +" @connection "+conn);
+			a.reftype = "eor";
+			def aa = t.verifyPayment( a );	
+			if(aa) a.putAll( aa );
+		}
+	}
+
+
+	@After(pattern="EORService.post", eval="#{args[0].txntype!=null}", index=10000 )
+	public void afterPostPayment(def evt) {
+		def a = evt.args[0];
+		def rct = evt.result;
+ 
+		def handler = a.txntype;
+		def p = pluginEm.find( [objid: handler] ).first();
+		if( p?.servicename ) {
+			def conn = p.connection;
+			def serviceName = p.servicename;
+			if(!conn) {
+				conn = p.objid;
+			}
+			def t = svc.lookup(serviceName, conn );
+			if(!t) throw new Exception(serviceName + " not found for "+handler +" @connection "+conn);
+			a.reftype = "eor";
+			t.postPayment( rct );			
+		}
+	}
+
+	/*
+	@After(pattern="EORVoidService.post", eval="#{result?.receipt?.collectiontype?.handler != null}", index=10000 )
+	public void onVoidPayment(def evt) {
+		def a = evt.result;
+		def handler = a.receipt.collectiontype.handler;
+		def p = pluginEm.find( [objid: handler] ).first();
+		if( p ) {
+			def conn = p.connection;
+			def serviceName = p.servicename;
+			if(!conn) {
+				conn = p.objid;
+			}
+			if(!serviceName) {
+				serviceName = "EPaymentService";
+			}
+			def t = svc.lookup(serviceName, conn );
+			if(!t) throw new Exception(serviceName + " not found for "+handler +" @connection "+conn);
+			t.voidPayment( a );
+		}
+	}
+	*/
+
+}
